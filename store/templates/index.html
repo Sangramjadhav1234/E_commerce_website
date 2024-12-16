@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - My Store{% endblock %}
+
+{% block content %}
+<h1>Welcome to My Store</h1>
+
+<div class="categories">
+    <h2>Categories</h2>
+    {% for category in categories %}
+        <a href="?category={{ category.id }}">{{ category.name }}</a>
+    {% endfor %}
+</div>
+
+<div class="products">
+    <h2>Products</h2>
+    {% for product in products %}
+        <div class="product">
+            <h3>{{ product.name }}</h3>
+            <p>Price: ${{ product.price }}</p>
+            <form method="post" action="{% url 'homepage' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product" value="{{ product.id }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
